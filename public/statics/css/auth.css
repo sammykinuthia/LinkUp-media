@@ -1,0 +1,77 @@
+:root{
+    --bg-primary:#1E1E1E;
+    --bg--secondary:#000;
+    --bg-accent:#1D9BF0;
+    --text-primary:#fff;
+    --text-secondary:#9A9494;
+
+}
+.login, .register{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login_left{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login_left img{
+    width: 80%;
+}
+.login_right form{
+    display: flex;
+    flex-direction: column;
+    gap: 2.2rem;
+    margin-top: 2.2rem;
+    align-items: center;
+}
+.login input, .login button {
+    display: block;
+    padding: 1rem 2rem;
+    border-radius:2rem;
+    font-size: 1rem;
+    background: var(--bg--secondary);
+    color: unset;
+    width: 100%;
+
+}
+.login button{
+    background: var(--bg-accent);
+}
+.forgot-password{
+    text-decoration: underline;
+    font-size: .9rem;
+    color: var(--text-secondary);
+}
+.login_right__title{
+    font-family: 'Kaushan Script', cursive;
+    font-size: 1.8rem;
+}
+
+
+
+
+
+
+@media screen and (max-width:900px) {
+  .login, .register{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width:499px) {
+    .login, .register{
+        grid-template-columns: 1fr;
+      }
+      .login_right{
+        width: 90%;
+        margin: 0 auto;
+      }
+      .login_right form{
+        gap: 1.2rem;
+        margin-top: 1.2rem;
+      }
+      
+}

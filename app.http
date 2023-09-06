@@ -1,0 +1,35 @@
+
+### get following users
+GET http://localhost:3000/users/following
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjJkOTI0MjRlLThjZDItNDgxOS1hZjliLTQzNWZkMzljNDBmMSIsImlhdCI6MTY5MzY0NjU4MywiZXhwIjoxNjkzNjYwOTgzfQ.ziR3-6S8FRJ2QeRFghQs4nrB17SqJctauz0p6eZfrHI
+
+
+
+
+### get notfollowing users
+GET http://localhost:3000/users/notfollowing
+Content-Type: application/json
+token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpZCI6IjJkOTI0MjRlLThjZDItNDgxOS1hZjliLTQzNWZkMzljNDBmMSIsImlhdCI6MTY5MzY0NjU4MywiZXhwIjoxNjkzNjYwOTgzfQ.ziR3-6S8FRJ2QeRFghQs4nrB17SqJctauz0p6eZfrHI
+
+
+### register user
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+
+{
+    "email":"admin@gmail.com",
+    "username":"admin",
+    "password":"admin"
+}
+
+### Login user
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+
+{
+    "email":"admin@gmail.com",
+    "password":"admin"
+}

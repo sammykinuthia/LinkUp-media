@@ -4,13 +4,14 @@
 @import "index.css";
 :root{
     --bg-primary:#1E1E1E;
-    --bg--secondary:#000;
+    --bg-secondary:#000;
     --bg-accent:#1D9BF0;
     --text-primary:#fff;
     --text-secondary:#9A9494;
     font-size: 20px;
-
+    
 }
+
 *, *::after, *::before{
     padding: 0px;
     margin: 0px;
@@ -27,6 +28,7 @@ body{
 .container{
     width: 80%;
     margin: 0 auto;
+    position: relative;
 }
 img{
     width: 100%;
@@ -45,7 +47,6 @@ footer{
     font-size: .9rem;
     color: var(--text-secondary);
 }
-
 
 
 

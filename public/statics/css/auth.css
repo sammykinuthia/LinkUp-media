@@ -50,7 +50,13 @@
     font-family: 'Kaushan Script', cursive;
     font-size: 1.8rem;
 }
-
+#form-message{
+    visibility: hidden;
+    padding: .6rem 1.2rem;
+    border-radius: .3rem;
+    /* background: #384d1a; */
+    background: #7e4d4d;
+}
 
 
 

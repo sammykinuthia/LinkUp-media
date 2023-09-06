@@ -21,14 +21,21 @@ aside {
     gap: 1rem;
 
 }
+.nav-upper{
+    position: relative;
+}
 
 .nav-upper div,
 .nav-lower div {
     display: flex;
     gap: 1rem;
     align-items: center;
+    cursor: pointer;
 }
 
+.nav-upper button{
+    cursor: pointer;
+}
 .logo {
     width: 70%;
 }
@@ -146,8 +153,13 @@ main {
 
 .main_body {
     padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
-
+.post-main{
+    width: 100%;
+}
 .post{
     display: flex;
     gap: 1rem;
@@ -164,9 +176,306 @@ main {
 .post-img-section{
     width: 100%;
 }
-.post-img{
+.post-img, .post-img-section img{
     border-radius: .3rem;
     aspect-ratio: 16/9 ;
     width: 100%;
    
 }
+
+/* user profile */
+.user-profile{
+
+}
+.profile-img{
+    aspect-ratio: 1/1;
+    width: 9rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 1rem auto 2rem;
+    
+}
+.users-details{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+}
+#profile-update{
+    background: var(--bg-accent);
+    padding: .4rem 1.2rem;
+    border-radius: 2rem;
+    color: var(--text-primary);
+}
+.user-data{
+    color: var(--text-secondary);
+    font-style: italic;
+}
+#profile-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    
+}
+#profile-form label{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+
+}
+#profile-form input{
+    display: block;
+    background: var(--bg-secondary);
+    padding: .4rem 1rem;
+    border-radius: 1rem;
+    color: unset;
+    width: 100%;
+    
+
+}
+#profile-form button{
+    padding: .4rem 1.2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--bg-accent);
+}
+
+#profile-form button[type=submit]{
+    background: var(--bg-accent);
+    color: var(--text-primary);
+}
+#profile-form input[type=file]{
+    display: none;
+}
+#profile-form svg{
+    display: block;
+    width: 4rem;
+    height: 3rem;
+    padding: .6rem;
+    border-radius: .3rem;
+    background: var(--bg-secondary);
+}
+.profile-action-section{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+.following-section{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: 0px 1px 0px 0px var(--text-secondary);
+}
+
+#logout{
+    cursor: pointer;
+}
+.create-post-modal-section{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    opacity: .93;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    display: none;
+
+}
+.post-modal{
+    opacity: 1;
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: .3rem;
+    margin-top: 2rem;
+    width: 30%;
+    height: fit-content;
+
+}
+.post-modal textarea{
+    background: unset;
+    padding: .4rem;
+    width: 100%;
+    height: 6rem;
+    color: var(--text-primary);
+    font-size: large;
+    outline: none;
+}
+.post-modal-action{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.post-modal-action button{
+    padding: .3rem 1rem;
+    border-radius: 1rem;
+    background: var(--bg-accent);
+    color: var(--text-primary);
+}
+.post-modal-action > *,.post-modal-cancel{
+    cursor: pointer;
+}
+#post-img{
+    display: none;
+}
+
+.post-comment-like-section{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.likes-count-section{
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+
+}
+.post-comment-like-section  *{
+    color:var(--text-secondary);
+}
+
+.post-actions{
+    display: flex;
+    justify-content: space-between;
+    padding: .3rem 8%;
+    color: var(--text-secondary);
+    border-bottom:1px solid var(--text-secondary);
+    border-top: 1px solid var(--text-secondary);
+    margin-top: .4rem;
+}
+.post-actions > div{
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+}
+.post-action-icon{
+    width: 1.4rem;
+    height: 1.4rem;
+}
+.profile-img{
+    border: 2px solid var(--text-secondary);
+}
+
+#toggle-menu{
+    width: 2rem;
+    height: 2rem;
+    display: none;
+}
+#close-toggle{
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: none;
+}
+#close-toggle svg{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0px 0px 8px 0px var(--bg-accent);
+
+}
+.post-username{
+    cursor: pointer;
+}
+/* comment */
+.comment{
+    display: flex;
+    gap: 1rem;
+    margin: .4rem 0;
+    background: var(--bg-secondary);
+    padding: .6rem;
+    border-radius: .6rem;
+}
+#comment-form{
+    width: 100%;
+}
+#comment-form textarea{
+    background: inherit;
+    width: 100%;
+    height: 4rem;
+    padding: .4rem;
+    color: var(--text-primary);
+    box-shadow: 0px 1px 2px -1px;
+    outline: none;
+}
+.comment-actions{
+    display: flex;
+    justify-content: space-between;
+}
+.comment-actions button{
+    background: unset;
+}
+.comment-actions svg{
+    fill: var(--text-primary);
+    color: var(--text-primary);
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.post-comment-like-section div, .post-actions div, .comment-actions > *{
+    cursor: pointer;
+}
+.view-comment-actions{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-secondary);
+}
+.view-comment-actions div{
+    display: flex;
+    gap:1rem;
+}
+.view-comment-actions:nth-child(1){
+    background: var(--bg-secondary);
+    color: white;
+}
+
+@media screen and (max-width:1200px) {
+    .post-modal{
+     width: 40%;
+    }
+ }
+
+@media screen and (max-width:768px) {
+   .aside-right{
+    display: none;
+   }
+   .main-page{
+   grid-template-columns:  1fr 2fr;
+   }
+   .post-modal{
+    width: 50%;
+   }
+}
+
+@media screen and (max-width:568px) {
+
+    .main-page{
+    grid-template-columns:  1fr;
+    }
+    #toggle-menu{
+        display: block;
+    }
+    .aside-left{
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: var(--bg-secondary);
+        padding: 1rem;
+        translate:-600px ;
+
+    }
+    .create-post-modal-section{
+        align-items: center;
+        justify-content: center;
+    }
+  
+    .post-modal{
+        width: 90%;
+        margin-top: -6rem;
+       }
+    
+ }

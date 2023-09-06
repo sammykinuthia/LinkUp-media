@@ -5,22 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../statics/css/styles.css">
-    <title>LinkUp Login</title>
+    <script defer type="module" src="./statics/js/main.js"></script>
+    <title>LinkUp Media</title>
 </head>
-
 <body>
     <div class="container main-page">
-        <aside>
+        <aside class="aside-left">
             <div class="nav-upper">
                 <div class="logo">
-                    <img src="./statics/images/linkup logo white.png" alt="linkup logo">
+                   <a href="/"> <img src="./statics/images/linkup logo white.png" alt="linkup logo"></a>
                 </div>
                 <div>
                     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <path fill="currentColor"
                             d="m21.743 12.331l-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z" />
                     </svg>
-                    <h3 id="home">Home</h3>
+                <a href="/"><h3 id="home">Home</h3></a>
                 </div>
                 <div>
                     <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -30,11 +30,14 @@
                     <h3 id="explore">Explore</h3>
                 </div>
                 <div>
-                    <button>POST</button>
+                    <button id="post-btn">POST</button>
+                </div>
+                <div id="close-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15"><path fill="currentColor" fill-rule="evenodd" d="M11.782 4.032a.575.575 0 1 0-.813-.814L7.5 6.687L4.032 3.218a.575.575 0 0 0-.814.814L6.687 7.5l-3.469 3.468a.575.575 0 0 0 .814.814L7.5 8.313l3.469 3.469a.575.575 0 0 0 .813-.814L8.313 7.5l3.469-3.468Z" clip-rule="evenodd"/></svg>
                 </div>
             </div>
             <div class="nav-lower">
-                <div>
+                <div id="logout">
                     <svg class="nav-icon " xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24">
                         <path fill="currentColor"
@@ -48,7 +51,7 @@
                         <path fill="currentColor"
                             d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
                     </svg>
-                    <h3>sammyk</h3>
+                    <h3 id="currentUser">sammyk</h3>
                 </div>
             </div>
         </aside>
@@ -67,77 +70,16 @@
                             d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2zm4.3 14.3a.996.996 0 0 1-1.41 0L12 13.41L9.11 16.3a.996.996 0 1 1-1.41-1.41L10.59 12L7.7 9.11A.996.996 0 1 1 9.11 7.7L12 10.59l2.89-2.89a.996.996 0 1 1 1.41 1.41L13.41 12l2.89 2.89c.38.38.38 1.02 0 1.41z" />
                     </svg>
                 </div>
+                <svg id="toggle-menu" xmlns="http://www.w3.org/2000/svg" width="1536" height="1280" viewBox="0 0 1536 1280"><path fill="currentColor" d="M1536 1088v128q0 26-19 45t-45 19H64q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19H64q-26 0-45-19T0 704V576q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19H64q-26 0-45-19T0 192V64q0-26 19-45T64 0h1408q26 0 45 19t19 45z"/></svg>
             </div>
-            <div class="main_body">
-                <div class="post">
-                    <div class="person-image">
-                        <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
-                    </svg>
-                    </div>
-                    <div class="post-main">
-                        <h4 class="post-username">Samuel Kinuthia</h4>
-                        <p class="post-message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus magnam impedit consectetur molestiae quis dolore similique minima doloribus voluptate unde autem quae, consequuntur accusamus. Ipsa expedita quas vitae sed cumque?</p>
-                        <div class="post-img-section">
-                            <img src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg" alt="" class="post-img">
-                        </div>
-
-                    </div>
-                </div>
-
-
-
+            <div id="main_body" class="main_body">
+                
             </div>
         </main>
         <aside class="aside-right">
             <h3 class="aside-title">People you might know</h3>
             <div class="person-follow-list">
-                <div class="person-follow">
-                    <div class="person-profile">
-                        <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="person-name">John Kiumbe</h4>
-                    <button class="person-follow">Follow</button>
-                </div>
-                <div class="person-follow">
-                    <div class="person-profile">
-                        <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="person-name">John Kiumbe</h4>
-                    <button class="person-follow">Follow</button>
-                </div>
-                <div class="person-follow">
-                    <div class="person-profile">
-                        <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="person-name">John Kiumbe</h4>
-                    <button class="person-follow">Follow</button>
-                </div>
-                <div class="person-follow">
-                    <div class="person-profile">
-                        <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
-                        </svg>
-                    </div>
-                    <h4 class="person-name">John Kiumbe</h4>
-                    <button class="person-follow">Follow</button>
-                </div>
+
             </div>
         </aside>
     </div>
@@ -145,6 +87,24 @@
         <p>LinkUp allows users to connect from anywhere around the world</p>
         <p>&copy; 2023</p>
     </footer>
+    <div class="create-post-modal-section" id="create-post-modal-section">
+        <form id="post-modal" class="post-modal">
+            <div id="post-modal-cancel" class="post-modal-cancel">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-3.4 14L12 13.4L8.4 17L7 15.6l3.6-3.6L7 8.4L8.4 7l3.6 3.6L15.6 7L17 8.4L13.4 12l3.6 3.6l-1.4 1.4Z"/></svg>
+            </div>
+            <div class="post-modal-main">
+                <textarea name="post" id="post-message" placeholder="Say something"></textarea>
+            </div>
+            <div class="post-modal-action">
+                <label>
+                    <input type="file" name="post-img" id="post-img">
+                    <svg id="post-upload" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h14q.825 0 1.413.588T21 5v14q0 .825-.588 1.413T19 21H5Zm1-4h12l-3.75-5l-3 4L9 13l-3 4Z"/></svg>
+                </label>
+                <button id="post-btn-submit">post</button>
+            </div>
+        </form>
+    </div>
+   
 </body>
 
 </html>

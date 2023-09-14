@@ -35,8 +35,10 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
     try {
         const conn = await pool
+        const user_id  = req.info.id
         if (conn.connected) {
             const result = await conn.request()
+                .input("user_id", user_id)
                 .execute("uspGetPosts")
             if (result.rowsAffected[0] == 0) {
                 return res.status(500).json({ message: "Unable to get posts" })
@@ -54,6 +56,29 @@ export const getPosts = async (req, res) => {
     }
 }
 
+export const getPostsExplore = async (req, res) => {
+    try {
+        const conn = await pool
+        const user_id  = req.info.id
+        if (conn.connected) {
+            const result = await conn.request()
+                .input("user_id", user_id)
+                .execute("uspGetPostsExplore")
+            if (result.rowsAffected[0] == 0) {
+                return res.status(500).json({ message: "Unable to get posts" })
+            }
+            else {
+                return res.status(200).json({ data: result.recordset })
+            }
+        }
+        else {
+            return res.status(500).json({ error: "error connecting to db" })
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
 
 export const getComments = async (req, res) => {
     try {
@@ -82,7 +107,7 @@ export const getComments = async (req, res) => {
 
 export const createComments = async (req, res) => {
     try {
-        const { message, image, post_id,level,parent_comment } = req.body
+        const { message, image, post_id, level, parent_comment } = req.body
         const id = v4()
         const user_id = req.info.id
         console.log(req.body);
@@ -102,6 +127,65 @@ export const createComments = async (req, res) => {
             }
             else {
                 return res.status(201).json({ data: result.recordset })
+            }
+        }
+        else {
+            return res.status(500).json({ error: "error connecting to db" })
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+
+export const likePost = async (req, res) => {
+    try {
+        const { post_id } = req.body
+        const user_id = req.info.id
+        const conn = await pool
+        if (conn.connected) {
+            let result = await conn.request()
+                    .input("user_id", user_id)
+                    .input("post_id", post_id)
+                    .execute("uspLikePost")
+       
+            console.log(result);
+            if (result.rowsAffected[0] == 0) {
+                return res.status(500).json({ message: "Could not Like" })
+            }
+            else {
+                return res.status(201).json({ message: "like success" })
+            }
+        }
+        else {
+            return res.status(500).json({ error: "error connecting to db" })
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+
+
+export const likeComment = async (req, res) => {
+    try {
+        const { comment_id } = req.body
+        const user_id = req.info.id
+        const conn = await pool
+        if (conn.connected) {
+            let result = await conn.request()
+                .input("user_id", user_id)
+                .input("comment_id", comment_id)
+                .execute("uspLikeComment")
+            
+            console.log(result);
+            if (result.rowsAffected[0] == 0) {
+                return res.status(500).json({ message: "Could not Like" })
+            }
+            else {
+                return res.status(201).json({ message: "like success" })
             }
         }
         else {

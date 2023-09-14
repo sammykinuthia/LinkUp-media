@@ -1,12 +1,16 @@
 import { useGet, usePost } from "./utils.js"
 
-export let posts = async ()=>{
-    let [res, code] = await useGet('/posts')
-    console.log(res);
+export let posts = async (explore = false) => {
+    let res, code
+    if (explore) {
+        [res, code] = await useGet('/posts/explore')
+    }
+    else {
+        [res, code] = await useGet('/posts')
+    }
     return res.data
 }
-export let comments = async (post_id)=>{
+export let comments = async (post_id) => {
     let [res, code] = await useGet(`/posts/comments/${post_id}`)
-    console.log(res);
     return res.data
 }

@@ -34,12 +34,15 @@ export const registerUser = async (req, res) => {
             }
         }
         else {
+            console.log(error);
             res.status(500).json({ "message": "error connecting to db" })
         }
     } catch (error) {
+        console.log(error.message);
         res.status(500).json({ message: error.message })
     }
 }
+
 export const updateUser = async (req, res) => {
     try {
         const { username, email, name, image, phone } = req.body
@@ -84,7 +87,6 @@ export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body
         const { error } = loginSchema.validate(req.body)
-
         if (error) {
             return res.status(422).json(error.details)
         }

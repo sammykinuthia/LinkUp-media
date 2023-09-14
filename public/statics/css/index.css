@@ -165,7 +165,7 @@ main {
     gap: 1rem;
     padding: .6rem;
     height: fit-content;
-    width: 100%;
+    /* width: 100%; */
     box-shadow: 0px 0px 1px 0px;
     border-radius: .3rem;
 }
@@ -424,7 +424,7 @@ main {
     justify-content: space-between;
     color: var(--text-secondary);
 }
-.view-comment-actions div{
+.view-comment-actions div{  
     display: flex;
     gap:1rem;
 }
@@ -432,7 +432,24 @@ main {
     background: var(--bg-secondary);
     color: white;
 }
+.liked{
+    color: var(--text-primary);
+}
+.post-view-comments-section{
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    margin: .6rem 0;
+}
+.post-view-comments-section > div {
+    border-left: 2px solid var(--text-secondary);
+}
+.level-1{
+    border-left: 4px solid var(--text-primary) !important;
+    margin-left: 1rem;
+    /* box-shadow: -3px 0px 0px 0px; */
 
+}
 @media screen and (max-width:1200px) {
     .post-modal{
      width: 40%;

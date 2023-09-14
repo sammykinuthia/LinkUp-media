@@ -84,6 +84,7 @@ CREATE TABLE likeComment(
 );
 GO
 
+-- SELECT  * FROM likeComment
 
 
 

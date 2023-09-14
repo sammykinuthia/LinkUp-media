@@ -95,6 +95,11 @@ postModal.addEventListener("submit", async e => {
 
 // posts section
 document.getElementById("main_body").innerHTML = await Posts()
+// explore
+document.getElementById("explore").addEventListener('click',async()=>{
+document.getElementById("main_body").innerHTML = await Posts(explore)
+
+})
 // toggle menu
 document.getElementById("toggle-menu").addEventListener('click', () => {
     document.getElementsByClassName("aside-left")[0].style.translate = "0"
@@ -111,7 +116,9 @@ document.getElementById("close-toggle").addEventListener("click", () => {
 // comments
 setTimeout(() => {
     let commentBtnList = document.getElementsByClassName("comment-section")
+    let likeBtnList = document.getElementsByClassName("like-section")
     let commentsList = document.getElementsByClassName("comments-count-section")
+    let commentSection
     // comment
     for (let i = 0; i < commentBtnList.length; i++) {
         let commentBtn = commentBtnList[i]
@@ -123,6 +130,7 @@ setTimeout(() => {
             const commentForm = commentSection.getElementsByTagName("form")[0]
             const commentBtnSubmit = commentSection.getElementsByTagName("button")[0]
 
+            console.log();
             // upload image 
             let inputImage = commentSection.getElementsByTagName("input")[0]
             let commentImage = ""
@@ -139,31 +147,115 @@ setTimeout(() => {
             })
 
             // submit comment
-            commentForm.addEventListener('submit',async(e)=>{
+            commentForm.addEventListener('submit', async (e) => {
                 e.preventDefault()
-                let commentMessage = commentSection.getElementById('comment-message').value
-                let data = {image:commentImage, message:commentMessage, post_id,level:0,parent_comment:"",}
+                let commentMessage = commentSection.querySelector('#comment-message').value
+                let data = { image: commentImage, message: commentMessage, post_id, level: 0, parent_comment: "", }
                 const [res, code] = await usePost('/posts/comment', data)
                 console.log(res);
-                console.log(code); 
-                if(code == 201){
-                    commentSection = ""
+                console.log(code);
+                if (code == 201) {
+                    commentSection.parentElement.querySelector("#total-comments").textContent++
+                    commentSection.innerHTML = ""
                 }
-                else{
+                else {
                     console.log(res);
                 }
-            })            
+            })
         })
     }
     // comments view //incomplete
     for (let i = 0; i < commentsList.length; i++) {
         let commentBtn = commentsList[i]
-        commentBtn.addEventListener("click", async() => {
+        commentBtn.addEventListener("click", async () => {
             let post_id = commentBtn.parentNode.parentNode.id
             let post = document.getElementById(post_id)
-            let commentSection = post.getElementsByClassName("post-view-comments-section")[0]
+            commentSection = post.getElementsByClassName("post-view-comments-section")[0]
             commentSection.innerHTML = await ViewComments(post_id)
+
+            // like comment
+            let commentLikeBtnList = commentSection.getElementsByClassName("comment-like")
+            if (commentLikeBtnList.length > 0) {
+                for (let i = 0; i < commentLikeBtnList.length; i++) {
+                    let commentlikeBtn = commentLikeBtnList[i]
+                    commentlikeBtn.addEventListener("click", async () => {
+                        let commentId = commentlikeBtn.parentElement.parentElement.parentElement.id
+                        if (!commentlikeBtn.classList.contains("liked")) {
+                            const [res, code] = await usePost("/posts/likecomment", { comment_id: commentId })
+                            console.log(res);
+                            if (code == 201) {
+                                commentlikeBtn.classList.add("liked")
+                                commentlikeBtn.parentElement.parentElement.querySelector("#comment-like-total").textContent++
+                            }
+
+                        }
+                    })
+                }
+            }
+            // sub comment
+            let commentReplyBtnList = document.getElementsByClassName("comment-reply")
+            for (let i = 0; i < commentReplyBtnList.length; i++) {
+                let commentReply = commentReplyBtnList[i]
+                commentReply.addEventListener("click", async () => {
+                    let commentId = commentReply.parentElement.parentElement.parentElement.id
+                    let creatteCommentSection = commentReply.parentElement.parentElement.parentElement.querySelector("#comment-create-comment-section")
+                    creatteCommentSection.innerHTML = await Comment()
+                    // upload image
+                    let commentImage = ""
+                    let inputImage = creatteCommentSection.querySelector("#post-img")
+                    let commentBtnSubmit = creatteCommentSection.querySelector('button')
+                    inputImage.addEventListener("change", async e => {
+                        commentBtnSubmit.disabled = true
+                        let formData = new FormData()
+                        formData.append('file', e.target.files[0])
+                        formData.append('upload_preset', 'linkup')
+                        fetch("https://api.cloudinary.com/v1_1/dbeq8dpkz/image/upload", { method: "POST", body: formData }).then(res => res.json()).then(data => {
+                            commentImage = data.url
+                            console.log(data);
+                            commentBtnSubmit.disabled = false
+                        })
+                    })
+                    // submit comment
+                    let form = creatteCommentSection.querySelector("#comment-form")
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault()
+                        let commentMessage = creatteCommentSection.querySelector("#comment-message").value
+                        let data = { image: commentImage, message: commentMessage, post_id, level: 1, parent_comment: commentId, }
+                        const [res, code] = await usePost('/posts/comment', data)
+                        console.log(res);
+                        console.log(code);
+                        if (code == 201) {
+                            commentSection.parentElement.querySelector("#total-comments").textContent++
+                            commentSection.innerHTML = ""
+                        }
+                        else {
+                            console.log(res);
+                        }
+                    })
+
+                })
+            }
 
         })
     }
+
+    // like post
+    for (let i = 0; i < likeBtnList.length; i++) {
+        let likeBtn = likeBtnList[i]
+        likeBtn.addEventListener("click", async () => {
+            let postId = likeBtn.parentElement.parentElement.id
+            if (!likeBtn.classList.contains("liked")) {
+                const [res, code] = await usePost("/posts/likepost", { post_id: postId })
+                if (code == 201) {
+                    likeBtn.classList.add("liked")
+                    likeBtn.parentElement.parentElement.querySelector("#total-likes").textContent++
+
+                }
+                else {
+                    console.log(res);
+                }
+            }
+        })
+    }
+
 }, 1000)

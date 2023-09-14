@@ -1,4 +1,5 @@
 import { comments, posts } from "./data.js"
+import { currentUser } from "./main.js"
 import { useGet, usePost, usePut } from "./utils.js"
 
 export function UserProfile(user) {
@@ -151,16 +152,22 @@ export async function PeopleToFollow() {
     return (usersList)
 }
 
-export async function Posts() {
-    let postList = await posts()
+export async function Posts(explore = false) {
+
+    let postList = []
+    if (explore) {
+        postList = await posts(explore)
+    }
+    else {
+        postList = await posts()
+    }
     let postHtml = ""
     postList.forEach(post => {
-        // console.log();
         let postImage = `<div class="post-img-section">
                             <img src="${post.image}"
                             alt="" class="post-img">
                         </div>`
-
+                        console.log(post);
         postHtml += `
                     <div class="post" }">
                         <div class="person-image">
@@ -184,7 +191,7 @@ export async function Posts() {
                                 </div>
                             </div>
                             <div class="post-actions">
-                                <div class='like-section'>
+                                <div class='like-section ${post.liked == 1 ? "liked" : ""}'>
                                     <svg class="post-action-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M23 10a2 2 0 0 0-2-2h-6.32l.96-4.57c.02-.1.03-.21.03-.32c0-.41-.17-.79-.44-1.06L14.17 1L7.59 7.58C7.22 7.95 7 8.45 7 9v10a2 2 0 0 0 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2M1 21h4V9H1v12Z"/></svg>
                                     Like
                                 </div>
@@ -237,51 +244,87 @@ export async function Comment() {
 export async function ViewComments(post_id) {
     let commentsList = await comments(post_id)
     let commentHtml = ""
-    if(commentsList.length){
-        for(let i = 0; i<commentsList.length; i++){
-            let comment= commentsList[i]
-           
-
-
+    let mainCommentsList = commentsList.filter(i => !i.parent_comment)
+    let subComments = commentsList.filter(i => i.parent_comment)
+    console.log(mainCommentsList);
+    if (mainCommentsList.length) {
+        for (let i = 0; i < mainCommentsList.length; i++) {
+            let comment = mainCommentsList[i]
             let commetImage = `<div class="post-img-section">
-            <img src="${comment.image}"
-            alt="" class="post-img">
-        </div>`
+                                    <img src="${comment.image}"
+                                    alt="" class="post-img">
+                                </div>`
 
-commentHtml += `
-    <div class="post" }">
-        <div class="person-image">
-            <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                viewBox="0 0 24 24">
-                <path fill="currentColor"
-                    d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
-            </svg>
-        </div>
-        <div class="post-main" id="${comment.id}">
-            <h4 class="comment-username" id="${comment.user_id}">${comment.full_name || comment.username}</h4>
-            <p class="comment-message">${comment.message || ""}</p>
-            ${comment.image && commetImage}
-            <div class="view-comment-actions">
-                <div>
-                    <p class='comment-like'>Like</p>
-                    <p class='comment-reply'>Reply</p>
-                </div>
-                <div>
-                0 likes
-                </div>
-                
-            </div>
-            <div id="comment-create-comment-section" class="comment-create-comment-section">
+            commentHtml += `
+                <div class="post">
+                    <div class="person-image">
+                        <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24">
+                            <path fill="currentColor"
+                                d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
+                        </svg>
+                    </div>
+                    <div class="post-main" id="${comment.id}">
+                        <h4 class="comment-username" id="${comment.user_id}">${comment.full_name || comment.username}</h4>
+                        <p class="comment-message">${comment.message || ""}</p>
+                        ${comment.image && commetImage}
+                        <div class="view-comment-actions">
+                            <div>
+                                <p class='comment-like'>Like</p>
+                                <p class='comment-reply'>Reply</p>
+                            </div>
+                            <div>
+                            <span id="comment-like-total">0</span>likes
+                            </div>
+                            
+                        </div>
+                        <div id="comment-create-comment-section" class="comment-create-comment-section">
 
-            </div>
-            <div id="comment-view-comments-section" class="comment-view-comments-section">
-            </div>
-        </div>
-    </div>
-     `
+                        </div>
+                        <div id="comment-view-comments-section" class="comment-view-comments-section">
+                        </div>
+                    </div>
+                </div>
+                `
+            // subcomment
+            let sub = subComments.filter(i => i.parent_comment == comment.id)
+            if (sub) {
+                sub.forEach(subComment => {
+                    commentHtml += `
+                        <div class="post level-1">
+                        <div class="person-image">
+                            <svg class="nav-icon icon-person" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12 4a4 4 0 1 1 0 8a4 4 0 0 1 0-8zm0 16s8 0 8-2c0-2.4-3.9-5-8-5s-8 2.6-8 5c0 2 8 2 8 2z" />
+                            </svg>
+                        </div>
+                        <div class="post-main" id="${subComment.id}">
+                            <h4 class="comment-username" id="${subComment.user_id}">${subComment.full_name || subComment.username}</h4>
+                            <p class="comment-message">${subComment.message || ""}</p>
+                            ${subComment.image && commetImage}
+                            <div class="view-comment-actions">
+                                <div>
+                                    <p class='comment-like'>Like</p>
+                                </div>
+                                <div>
+                                <span id="comment-like-total">0</span>likes
+                                </div>
+                                
+                            </div>
+                            <div id="comment-create-comment-section" class="comment-create-comment-section">
+    
+                            </div>
+                            <div id="comment-view-comments-section" class="comment-view-comments-section">
+                            </div>
+                        </div>
+                    </div>
+                        `
+                })
+            }
         }
     }
 
-    return(commentHtml)
+    return (commentHtml)
 
 }

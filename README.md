@@ -1,6 +1,7 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
+<!--  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a> -->
+    ![linkup logo white](https://github.com/sammykinuthia/LinkUp-media/assets/60265803/8fd85b87-fae1-4569-8930-787e0f07252a)
 </p>
 
 <h3 align="center">linkup</h3>

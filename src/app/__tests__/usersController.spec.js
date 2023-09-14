@@ -118,8 +118,7 @@ describe("User Registration", () => {
         //     execute: vi.fn().mockResolvedValueOnce({ rowsAffected: [1] })
         // })
 
-        // vi.spyOn(jwt, 'sign').mockReturnValue('Token')
-
+        vi.spyOn(jwt, 'sign').mockReturnValue('Token')
         await registerUser(req, res)
         expect(res.status).toHaveBeenCalledWith(201)
 

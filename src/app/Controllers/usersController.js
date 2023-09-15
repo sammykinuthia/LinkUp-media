@@ -26,6 +26,7 @@ export const registerUser = async (req, res) => {
                 .input("password", hashPwd)
                 .execute("uspRegisterUser")
             if (result.rowsAffected[0] == 0) {
+                console.log(res);
                 res.status(500).json({ Error: "error creating user" })
             }
             else {
@@ -34,7 +35,7 @@ export const registerUser = async (req, res) => {
             }
         }
         else {
-            console.log(error);
+            console.log(res);
             res.status(500).json({ "message": "error connecting to db" })
         }
     } catch (error) {

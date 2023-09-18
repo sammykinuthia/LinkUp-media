@@ -450,6 +450,18 @@ main {
     /* box-shadow: -3px 0px 0px 0px; */
 
 }
+
+/* toast */
+.toast-section{
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--bg-accent);
+    color: var(--bg-primary);
+    padding: 1rem 1.6rem;
+    border-radius: .3rem;
+    visibility: hidden;
+}
 @media screen and (max-width:1200px) {
     .post-modal{
      width: 40%;

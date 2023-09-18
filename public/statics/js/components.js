@@ -1,6 +1,6 @@
 import { comments, posts } from "./data.js"
 import { currentUser } from "./main.js"
-import { useGet, usePost, usePut } from "./utils.js"
+import { toastMessage, useGet, usePost, usePut } from "./utils.js"
 
 export function UserProfile(user) {
     const { image, name, username, email, phone, followers, following, posts } = user
@@ -61,6 +61,7 @@ export function UpdateProfile(user) {
             console.log(res);
             setTimeout(() => {
                 messageSection.style.visibility = "hidden"
+                toastMessage("update success")
             }, 3000)
         })
 
@@ -214,7 +215,6 @@ export async function Posts(explore = false) {
 }
 
 export async function Comment() {
-
     return (`
             <div class="comment">
                     <div class="person-image">

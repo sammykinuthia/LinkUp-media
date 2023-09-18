@@ -1,5 +1,5 @@
 import { UpdateProfile, UserProfile, PeopleToFollow, Posts, Comment, ViewComments } from "./components.js"
-import { useGet, usePost } from "./utils.js"
+import { toastMessage, useGet, usePost } from "./utils.js"
 
 const token = localStorage.getItem("token")
 if (!token) {
@@ -90,6 +90,7 @@ postModal.addEventListener("submit", async e => {
     console.log(code);
     if (code == 201)
         postModalSection.style.display = "none"
+        toastMessage("You created a post successfully")
 
 })
 
@@ -156,7 +157,8 @@ setTimeout(() => {
                 console.log(code);
                 if (code == 201) {
                     commentSection.parentElement.querySelector("#total-comments").textContent++
-                    commentSection.innerHTML = ""
+                    commentSection.innerHTML = await ViewComments(post_id)
+                    toastMessage("comment sent")
                 }
                 else {
                     console.log(res);
@@ -164,7 +166,7 @@ setTimeout(() => {
             })
         })
     }
-    // comments view //incomplete
+    // comments view 
     for (let i = 0; i < commentsList.length; i++) {
         let commentBtn = commentsList[i]
         commentBtn.addEventListener("click", async () => {
@@ -226,7 +228,7 @@ setTimeout(() => {
                         console.log(code);
                         if (code == 201) {
                             commentSection.parentElement.querySelector("#total-comments").textContent++
-                            commentSection.innerHTML = ""
+                            commentSection.innerHTML = await ViewComments(post_id)
                         }
                         else {
                             console.log(res);

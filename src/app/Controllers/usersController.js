@@ -173,13 +173,14 @@ export const verifyCode = async (req, res) => {
                 res.status(404).json({ message: "email not found" })
             }
             else {
-                const { id } = user.recordset[0]
+                const user_id = user.recordset[0].id
                 const result = await conn.request()
-                    .input("id", id)
+                    .input("user_id", user_id)
                     .input("code", code)
-                    .execute("uspSaveResetCode")
+                    .execute("uspConfirmCode")
+                    console.log(result);
                 if (result.rowsAffected[0] == 0) {
-                    res.status(500).json({ message: "code could not be saved" })
+                    res.status(500).json({ message: "code could not be verified" })
                 }
                 else {
                     res.status(200).json({ message: "Code verified" })

@@ -4,7 +4,6 @@ USE Linkup;
 GO
 
 
-
 CREATE TABLE users(
     id VARCHAR(200) PRIMARY KEY,
     full_name VARCHAR(200),
@@ -48,8 +47,7 @@ CREATE TABLE comments(
     is_deleted BIT DEFAULT 0,
     parent_comment VARCHAR(200),
     FOREIGN KEY(user_id) REFERENCES users(id),
-    FOREIGN KEY(post_id) REFERENCES posts(id),
-    -- FOREIGN KEY(parent_comment) REFERENCES comments(id),
+    FOREIGN KEY(post_id) REFERENCES posts(id)
 );
 GO
 -- ALTER TABLE comments
@@ -85,6 +83,12 @@ CREATE TABLE likeComment(
 GO
 
 -- SELECT  * FROM likeComment
+
+
+
+-- 
+
+
 
 
 

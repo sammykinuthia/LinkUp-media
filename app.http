@@ -33,3 +33,13 @@ Content-Type: application/json
     "email":"admin@gmail.com",
     "password":"admin"
 }
+
+### verify code
+POST http://localhost:3000/users/verifycode
+Content-Type: application/json
+
+
+{
+    "email":"samuelmwaniki17@gmail.com",
+    "code":"73618"
+}

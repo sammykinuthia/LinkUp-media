@@ -17,6 +17,11 @@ export const usePut = async (url, data = {}) => {
     const res = await fetch(url, { method: "put", headers: { "Content-Type": "application/json", token }, body: JSON.stringify(data) })
     return [res, res.status]
 }
+export const useDelete = async (url) => {
+    const res = await fetch(url, { method: "DELETE", headers: { "Content-Type": "application/json", token }})
+    return [res, res.status]
+}
+
 
 
 export function toastMessage(message) {
@@ -28,6 +33,19 @@ export function toastMessage(message) {
     setTimeout(() => {
         toastSection.style.visibility = "hidden"
     }, 1000)
+}
 
-
+export function authMessageToast(message, isSuccess=true) {
+    const messageSection = document.getElementById("form-message")
+    messageSection.innerText = message
+    messageSection.style.visibility = "visible"
+    if (isSuccess) {
+        messageSection.style.background = "#384d1a"
+    }
+    else {
+        messageSection.style.background = "#7e4d4d"
+    }
+    setTimeout(()=>{
+        messageSection.style.visibility = "hidden"
+    },2000)
 }

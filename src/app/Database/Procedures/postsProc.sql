@@ -49,6 +49,42 @@ BEGIN
     WHERE p.is_deleted = 0;
 END;
 GO
+
+
+
+CREATE OR ALTER PROC uspGetPost
+    (@post_id VARCHAR(200))
+AS
+BEGIN
+    SELECT
+        p.id,
+        p.[image],
+        p.[message],
+        p.user_id,
+        u.username,
+        comments,
+        likes,
+        ISNULL(lp.liked, 0) AS liked,
+        followed_user_id
+    FROM posts p
+        LEFT JOIN (SELECT username, id
+        FROM users) u ON u.id = p.user_id
+        LEFT JOIN (SELECT post_id, COUNT(*) AS comments
+        FROM comments
+        GROUP BY post_id) c ON c.post_id = p.id
+        LEFT JOIN (SELECT post_id, COUNT(*) AS likes
+        FROM likePost
+        GROUP BY post_id) lpcount ON lpcount.post_id = p.id
+        LEFT JOIN (SELECT user_id, followed_user_id
+        FROM follow) f ON f.user_id = p.user_id
+        LEFT JOIN (SELECT post_id, 1 AS liked
+        FROM likePost ) lp ON lp.post_id = p.id
+    WHERE p.is_deleted = 0 AND p.id =@post_id;
+END;
+GO
+
+-- SELECT * from posts
+-- EXEC uspGetPost '0e3599e4-cbb1-439b-9c79-edbfa268bc2a'
 -- 
 -- SELECT user_id, followed_user_id FROM follow WHERE followed_user_id = '9340cb5e-e952-4f31-9d0d-e508d43dce2d'
 -- SELECT * FROM users
@@ -146,5 +182,14 @@ BEGIN
 END;
 GO
 
--- SELECT * FROM comments
--- "63f94a23-51d9-4e4e-89e5-92c9811e8c91,90571e98-df6a-42f2-9b9c-cbb74e3cb799"
+
+CREATE OR ALTER PROC uspDeletePost(@post_id VARCHAR(200))
+AS
+BEGIN
+    UPDATE posts
+    SET is_deleted = 1
+    WHERE id = @post_id
+END;
+GO
+
+EXEC uspDeletePost '0e3599e4-cbb1-439b-9c79-edbfa268bc2a'

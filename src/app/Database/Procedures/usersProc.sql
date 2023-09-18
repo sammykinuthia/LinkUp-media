@@ -84,6 +84,16 @@ BEGIN
 END;
 GO
 
+-- confirm code
+CREATE OR ALTER PROC uspConfirmCode
+    (@user_id VARCHAR(200),
+    @code VARCHAR(200))
+AS
+BEGIN
+    SELECT * FROM resetPwd
+    WHERE user_id = @user_id AND code=@code
+END;
+GO
 -- SELECT * from resetCode
 
 CREATE  OR ALTER PROC uspCheckVerificationCode(@user_id VARCHAR(200),

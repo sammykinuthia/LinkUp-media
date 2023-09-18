@@ -35,7 +35,7 @@ export const createPost = async (req, res) => {
 export const getPosts = async (req, res) => {
     try {
         const conn = await pool
-        const user_id  = req.info.id
+        const user_id = req.info.id
         if (conn.connected) {
             const result = await conn.request()
                 .input("user_id", user_id)
@@ -55,11 +55,34 @@ export const getPosts = async (req, res) => {
         return res.status(500).json({ error: error.message })
     }
 }
+export const getSinglePost = async (req, res) => {
+    try {
+        const conn = await pool
+        const { post_id } = req.params
+        if (conn.connected) {
+            const result = await conn.request()
+                .input("post_id", post_id)
+                .execute("uspGetPost")
+            if (result.rowsAffected[0] == 0) {
+                return res.status(500).json({ message: "Unable to get posts" })
+            }
+            else {
+                return res.status(200).json({ data: result.recordset })
+            }
+        }
+        else {
+            return res.status(500).json({ error: "error connecting to db" })
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
 
 export const getPostsExplore = async (req, res) => {
     try {
         const conn = await pool
-        const user_id  = req.info.id
+        const user_id = req.info.id
         if (conn.connected) {
             const result = await conn.request()
                 .input("user_id", user_id)
@@ -146,10 +169,10 @@ export const likePost = async (req, res) => {
         const conn = await pool
         if (conn.connected) {
             let result = await conn.request()
-                    .input("user_id", user_id)
-                    .input("post_id", post_id)
-                    .execute("uspLikePost")
-       
+                .input("user_id", user_id)
+                .input("post_id", post_id)
+                .execute("uspLikePost")
+
             console.log(result);
             if (result.rowsAffected[0] == 0) {
                 return res.status(500).json({ message: "Could not Like" })
@@ -179,13 +202,42 @@ export const likeComment = async (req, res) => {
                 .input("user_id", user_id)
                 .input("comment_id", comment_id)
                 .execute("uspLikeComment")
-            
+
             console.log(result);
             if (result.rowsAffected[0] == 0) {
                 return res.status(500).json({ message: "Could not Like" })
             }
             else {
                 return res.status(201).json({ message: "like success" })
+            }
+        }
+        else {
+            return res.status(500).json({ error: "error connecting to db" })
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
+
+
+export const deletePost = async (req, res) => {
+    try {
+        const { post_id } = req.params
+        const conn = await pool
+        if (conn.connected) {
+            let result = await conn.request()
+                .input("post_id", post_id)
+                .execute("uspDeletePost")
+            console.log(result);
+            console.log('connected');
+
+            if (result.rowsAffected[0] == 0) {
+                return res.status(400).json({ message: "Could not delete the post" })
+            }
+            else {
+                return res.status(202).json({ message: "Post deleted successfuly" })
             }
         }
         else {

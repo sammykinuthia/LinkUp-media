@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../statics/css/styles.css">
     <title>LinkUp Login</title>
+    <script type="module" src="./index.js" defer></script>
 </head>
 <body>
     <div class="container login">
@@ -13,9 +14,25 @@
         </div>
         <div class="login_right">
             <h3 class="login_right__title">Reset Password,</h3>
-            <form>
+            <form id="form-email">
+                <p id="form-message"></p>
                 <input type="email" name="email" id="email" placeholder="Email">
                 <button type="submit">Reset</button>
+                    <a href="../login">Login</a>
+            </form>
+            <form id="form-code">
+                <p id="form-message"></p>
+                <input type="email" name="email" id="email" placeholder="Email">
+                <input type="text" name="code" id="code" placeholder="code">
+                <button type="submit">Confirm Code</button>
+                    <a href="../login">Login</a>
+            </form>
+            <form id="form-password">
+                <p id="form-message"></p>
+                <input type="email" name="email" id="email" placeholder="Email">
+                <input type="password" name="password", id="password", placeholder="*******">
+                <input type="password" name="password", id="password-confirm", placeholder="*******">
+                <button type="submit">submit</button>    
                     <a href="../login">Login</a>
             </form>
         </div>

@@ -58,7 +58,9 @@
     background: #7e4d4d;
 }
 
-
+#form-code, #form-password{
+    display: none;
+}
 
 
 

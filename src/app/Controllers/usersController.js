@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import { v4 } from 'uuid'
 import jwt from 'jsonwebtoken'
+// import { DbConn } from '../Config/config.js'
 import { pool } from '../Config/config.js'
 import { loginSchema, registerSchema, updateSchema } from '../Validators/usersValidator.js'
 // const dotenv = require ('dotenv')
@@ -19,27 +20,30 @@ export const registerUser = async (req, res) => {
         const hashPwd = await bcrypt.hash(password, 4)
         const conn = await pool
         if (conn.connected) {
+            
             const result = await conn.request()
-                .input("id", id)
-                .input("username", username)
-                .input("email", email)
-                .input("password", hashPwd)
-                .execute("uspRegisterUser")
+            .input("id", id)
+            .input("username", username)
+            .input("email", email)
+            .input("password", hashPwd)
+            .execute("uspRegisterUser")
             if (result.rowsAffected[0] == 0) {
-                console.log(res);
+                // console.log(res);
                 res.status(500).json({ Error: "error creating user" })
             }
             else {
+                console.log('connected');
                 const token = jwt.sign({ username, email, id }, process.env.SECRET, { expiresIn: "4h" })
+                console.log(token);
                 res.status(201).json({ message: "Register success", token })
             }
         }
         else {
-            console.log(res);
+            // console.log(res);
             res.status(500).json({ "message": "error connecting to db" })
         }
     } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
         res.status(500).json({ message: error.message })
     }
 }
@@ -178,7 +182,7 @@ export const verifyCode = async (req, res) => {
                     .input("user_id", user_id)
                     .input("code", code)
                     .execute("uspConfirmCode")
-                    console.log(result);
+                console.log(result);
                 if (result.rowsAffected[0] == 0) {
                     res.status(500).json({ message: "code could not be verified" })
                 }

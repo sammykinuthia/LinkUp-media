@@ -18,6 +18,13 @@ export const sqlConfig = {
         trustServerCertificate: true // change to true for local dev / self-signed certs
     }
 }
-
-export const pool = mssql.connect(sqlConfig)
+export class DbConn {
+   static async pool(sqlConfig) {
+        return await mssql.connect(sqlConfig)
+    }
+}
+// export const pool =  mssql.connect(sqlConfig)
+// const conn = new DbConn()
+// export const pool = conn.pool(sqlConfig)
+export const pool = DbConn.pool(sqlConfig)
 

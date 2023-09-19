@@ -1,38 +1,46 @@
-import mssql from 'mssql'
-import bcrypt from 'bcrypt'
-import { registerUser } from "../Controllers/usersController";
+const { registerUser } = require('../Controllers/usersController.js'); // Import your controller here
+const { pool } = require('../Config/config.js'); // Import your database connection here
+const bcrypt = require('bcrypt')
+const mssql = require('mssql')
+import { registerSchema } from '../Validators/usersValidator'
+const jwt = require('jsonwebtoken')
 
+jest.mock('jsonwebtoken')
 
-const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn().mockReturnThis()
-}
+jest.mock('../Config/config.js', () => ({
+    pool: {
+        connected: true,
+        request: jest.fn().mockReturnThis(),
+        input: jest.fn().mockReturnThis(),
+        execute: jest.fn(()=>{
+          return  {rowsAffected:[1]}
+        }),
+    }
+}))
 
-describe("reg users", () => {
-    it("reg fails", async () => {
+describe("reg user", () => {
+
+    it("reg users success", async () => {
         const req = {
             body: {
                 email: "sam@gmail.com",
-                username: "sam",
-                password:"sam"
+                password: "sam",
+                username: "sam"
             }
         }
-        jest.spyOn(bcrypt, 'hash').mockResolvedValueOnce("kjhgsaiuytwiulkyiyui")
-        const mockedInput = jest.fn().mockReturnThis()
-        const mockedExecute = jest.fn().mockResolvedValue({rowsAffected: [1]})
-        const mockedRequest ={
-            input: mockedInput,
-            execute: mockedExecute
-        }
-        const mockedPool ={
-            request: jest.fn().mockReturnValue(mockedRequest)
+        const res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn()
         }
 
-        jest.spyOn(mssql, 'connect').mockResolvedValue(mockedPool)
+        const conn = await pool
+        // console.log(conn);
 
+       const mockedToken = "kbjksbfjksbjfb"
+       const token = (jwt.sign).mockReturnValue(mockedToken)
+    //    console.log(token);
         await registerUser(req, res)
-        expect(res.status).toHaveBeenCalledWith(422)
-
-
+        expect(res.status).toHaveBeenCalledWith(201)
+       
     })
 })
